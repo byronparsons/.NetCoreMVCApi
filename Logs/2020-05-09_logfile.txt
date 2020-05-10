@@ -1,0 +1,1 @@
+2020-05-09 12:01:32.4300 INFO company with id: c9d4c053-49b6-410c-bc78-2d54a9991870 doesn't exist in the database.

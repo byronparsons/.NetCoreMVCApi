@@ -1,0 +1,44 @@
+2020-05-04 07:35:39.3706 INFO Company with 3d490a70-94ce-4d15-9494-5248280c2ce3, does not exist in the database
+2020-05-04 08:33:58.1218 INFO Unable to find a company for company id:c9d4c053-49b6-410c-bc78-2d54a9991870
+2020-05-04 09:19:37.9190 INFO Company with 3d490a70-94ce-4d15-9494-5248280c2ce2, does not exist in the database
+2020-05-04 09:19:43.1076 INFO Unable to find a company for company id:c9d4c053-49b6-410c-bc78-2d54a9991873
+2020-05-04 09:56:06.4609 INFO Unable to find employee(86dba8c0-d178-41e7-938c-ed49778fb52c) from company:Byron Home Learning(c80f00ee-7e3b-4244-96b8-1e0e17397866)
+2020-05-04 09:56:10.3273 INFO Unable to find employee(86dba8c0-d178-41e7-938c-ed49778fb52c) from company:Byron Home Learning(c80f00ee-7e3b-4244-96b8-1e0e17397866)
+2020-05-04 09:56:38.7404 INFO Unable to find company for company id: c9d4c053-49b6-410c-bc78-2d54a9991870
+2020-05-04 17:59:00.6877 INFO Unable to find company for company id: c9d4c053-49b6-410c-bc78-2d54a9991870
+2020-05-04 18:57:25.0926 INFO Unable to find company for company id: c9d4c053-49b6-410c-bc78-2d54a9991870
+2020-05-04 18:58:20.2426 DEBUG GetCompanies has been called.
+2020-05-04 18:59:26.6640 DEBUG GetCompanies has been called.
+2020-05-04 18:59:31.2345 INFO Unable to find company for company id: c9d4c053-49b6-410c-bc78-2d54a9991870
+2020-05-04 18:59:51.1573 INFO Company with 3d490a70-94ce-4d15-9494-5248280c2ce2, does not exist in the database
+2020-05-04 19:00:16.3829 INFO Company with 3d490a70-94ce-4d15-9494-5248280c2ce2, does not exist in the database
+2020-05-04 19:00:54.5866 DEBUG GetCompanies has been called.
+2020-05-04 19:06:13.4476 DEBUG GetCompanies has been called.
+2020-05-04 19:06:25.4494 DEBUG GetCompanies has been called.
+2020-05-04 19:07:30.5603 DEBUG GetCompanies has been called.
+2020-05-04 19:07:39.5538 DEBUG GetCompanies has been called.
+2020-05-04 19:07:47.3159 DEBUG GetCompanies has been called.
+2020-05-04 19:44:17.0408 DEBUG GetCompanies has been called.
+2020-05-04 19:44:39.0834 DEBUG GetCompanies has been called.
+2020-05-04 19:44:45.0107 DEBUG GetCompanies has been called.
+2020-05-04 19:44:54.5200 DEBUG GetCompanies has been called.
+2020-05-04 19:45:00.8758 DEBUG GetCompanies has been called.
+2020-05-04 19:45:16.9447 DEBUG GetCompanies has been called.
+2020-05-04 19:45:30.8343 DEBUG GetCompanies has been called.
+2020-05-04 19:46:12.7841 DEBUG GetCompanies has been called.
+2020-05-04 19:46:24.1236 DEBUG GetCompanies has been called.
+2020-05-04 19:46:31.8123 DEBUG GetCompanies has been called.
+2020-05-04 19:46:58.9438 DEBUG GetCompanies has been called.
+2020-05-04 19:47:16.8641 DEBUG GetCompanies has been called.
+2020-05-04 20:01:05.8434 DEBUG GetCompanies has been called.
+2020-05-04 20:01:16.6930 DEBUG GetCompanies has been called.
+2020-05-04 20:02:53.3829 DEBUG GetCompanies has been called.
+2020-05-04 20:03:02.4761 DEBUG GetCompanies has been called.
+2020-05-04 20:03:11.1256 DEBUG GetCompanies has been called.
+2020-05-04 20:03:16.7378 DEBUG GetCompanies has been called.
+2020-05-04 20:03:24.3947 DEBUG GetCompanies has been called.
+2020-05-04 20:03:42.7182 DEBUG GetCompanies has been called.
+2020-05-04 20:03:48.7982 DEBUG GetCompanies has been called.
+2020-05-04 20:03:57.3906 DEBUG GetCompanies has been called.
+2020-05-04 20:04:03.8413 DEBUG GetCompanies has been called.
+2020-05-04 20:30:10.3123 DEBUG GetCompanies has been called.
