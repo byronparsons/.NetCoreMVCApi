@@ -1,3 +1,0 @@
-2020-05-08 12:28:15.7442 ERROR Object sent from client is null. Controller:Employees Action:CreateEmployeeForCompany
-2020-05-08 12:28:15.7726 ERROR Invalid model state for the object. Controller: Employees, action: CreateEmployeeForCompany
-2020-05-08 15:09:55.1377 INFO company with id: 9b926c36-6782-4e9d-9cec-08d7f0fc11bd doesn't exist in the database.
