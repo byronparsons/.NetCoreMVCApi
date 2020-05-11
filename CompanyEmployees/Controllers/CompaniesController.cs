@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyEmployees.Controllers
 {
+    //[ApiVersion("1.0")]
     [Route("api/companies")]
     [ApiController]
     public class CompaniesController : ControllerBase
@@ -20,6 +21,14 @@ namespace CompanyEmployees.Controllers
         private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
 
+        [HttpOptions]
+        public IActionResult GetCompaniesOptions()
+        {
+            Response.Headers.Add("Allow", "DELETE, GET, OPTIONS, POST, PUT");
+
+            return Ok();
+        }
+
         public CompaniesController(ILoggerManager logger, IRepositoryManager repository, IMapper mapper)
         {
             _logger = logger;
@@ -27,7 +36,7 @@ namespace CompanyEmployees.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
+        [HttpGet(Name = "GetCompanies")]
         public async Task<IActionResult> GetCompanies()
         {
             //throw new Exception("Exception: this is a test of failure");
@@ -47,7 +56,7 @@ namespace CompanyEmployees.Controllers
             return Ok(companyDto);
         }
 
-        [HttpPost]
+        [HttpPost(Name ="CreateCompany")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCompany([FromBody]CompanyForCreationDto company)
         {

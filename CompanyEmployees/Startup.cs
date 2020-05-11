@@ -43,6 +43,7 @@ namespace CompanyEmployees
             services.AddScoped<ValidateMediaTypeAttribute>();
             services.AddScoped<EmployeeLinks>();
 
+            services.ConfigureVersioning();
 
             //in .NET 2.2 was AddMvc but this registered views & pages with are not needed in API
             services.AddControllers(config =>

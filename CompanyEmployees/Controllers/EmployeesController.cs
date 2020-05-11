@@ -38,7 +38,16 @@ namespace CompanyEmployees.Controllers
             _employeeLinks = employeeLinks;
         }
 
+        [HttpOptions]
+        public IActionResult GetEmployeesOptions()
+        {
+            Response.Headers.Add("Allow", "DELETE, GET, OPTIONS, PATCH, POST, PUT");
+
+            return Ok();
+        }
+
         [HttpGet]
+        [HttpHead]
         [ServiceFilter(typeof(ValidateCompanyExistsAttribute))]
         [ServiceFilter(typeof(ValidateMediaTypeAttribute))]
         public async Task<IActionResult> GetEmployeesForCompany(Guid companyId, [FromQuery]EmployeeParameters empParams)
