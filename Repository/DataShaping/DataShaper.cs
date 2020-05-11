@@ -18,14 +18,14 @@ namespace Repository.DataShaping
             Properties = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
         }
 
-        public IEnumerable<Entity> ShapeData(IEnumerable<T> entities, string fieldsString)
+        public IEnumerable<ExpandoObject> ShapeData(IEnumerable<T> entities, string fieldsString)
         {
             var requiredProperties = GetRequiredProperties(fieldsString);
 
             return FetchData(entities, requiredProperties);
         }
 
-        public Entity ShapeData(T entity, string fieldsString)
+        public ExpandoObject ShapeData(T entity, string fieldsString)
         {
             var requiredProperties = GetRequiredProperties(fieldsString);
 
@@ -54,9 +54,9 @@ namespace Repository.DataShaping
             return requiredProperties;
         }
 
-        private IEnumerable<Entity> FetchData(IEnumerable<T> entities, IEnumerable<PropertyInfo> requiredProperties)
+        private IEnumerable<ExpandoObject> FetchData(IEnumerable<T> entities, IEnumerable<PropertyInfo> requiredProperties)
         {
-            var shapedData = new List<Entity>();
+            var shapedData = new List<ExpandoObject>();
 
             shapedData.AddRange(from entity in entities
                                 let shapedDataObj = FetchDataForEntity(entity, requiredProperties)
@@ -70,9 +70,9 @@ namespace Repository.DataShaping
             //}
         }
 
-        private Entity FetchDataForEntity(T entity, IEnumerable<PropertyInfo> requiredProperties)
+        private ExpandoObject FetchDataForEntity(T entity, IEnumerable<PropertyInfo> requiredProperties)
         {
-            var shapedObj = new Entity();
+            var shapedObj = new ExpandoObject();
 
             foreach (var property in requiredProperties)
             {
