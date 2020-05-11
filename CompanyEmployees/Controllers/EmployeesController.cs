@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using AutoMapper;
 using CompanyEmployees.ActionFilters;
+using CompanyEmployees.Utility;
 using Contracts;
 using Entities.Dto;
 using Entities.Models;
@@ -24,18 +25,22 @@ namespace CompanyEmployees.Controllers
         private readonly ILoggerManager _logger;
         private readonly IRepositoryManager _repository;
         private readonly IMapper _mapper;
-        private readonly IDataShaper<EmployeeDto> _dataShaper;
+        private readonly EmployeeLinks _employeeLinks;
+        //private readonly IDataShaper<EmployeeDto> _dataShaper;
+        //IDataShaper<EmployeeDto> dataShaper
 
-        public EmployeesController(ILoggerManager logger, IRepositoryManager repository, IMapper mapper, IDataShaper<EmployeeDto> dataShaper)
+        public EmployeesController(ILoggerManager logger, IRepositoryManager repository, IMapper mapper, EmployeeLinks employeeLinks)
         {
             _logger = logger;
             _repository = repository;
             _mapper = mapper;
-            _dataShaper = dataShaper;
+            //_dataShaper = dataShaper;
+            _employeeLinks = employeeLinks;
         }
 
         [HttpGet]
         [ServiceFilter(typeof(ValidateCompanyExistsAttribute))]
+        [ServiceFilter(typeof(ValidateMediaTypeAttribute))]
         public async Task<IActionResult> GetEmployeesForCompany(Guid companyId, [FromQuery]EmployeeParameters empParams)
         {
             if (!empParams.ValidAgeRange)
@@ -47,7 +52,10 @@ namespace CompanyEmployees.Controllers
             
             var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
 
-            return Ok(_dataShaper.ShapeData(employeesDto, empParams.Fields));
+            var links = _employeeLinks.TryGenerateLinks(employeesDto, empParams.Fields, companyId, HttpContext); 
+            return links.HasLinks ? Ok(links.LinkedEntities) : Ok(links.ShapedEntities);
+
+            //return Ok(_dataShaper.ShapeData(employeesDto, empParams.Fields));
         }
 
         [HttpGet("{id}", Name = "GetEmployeeForCompanyById")]

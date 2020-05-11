@@ -1,6 +1,7 @@
 using AutoMapper;
 using CompanyEmployees.ActionFilters;
 using CompanyEmployees.Extensions;
+using CompanyEmployees.Utility;
 using Contracts;
 using Entities.Dto;
 using Microsoft.AspNetCore.Builder;
@@ -37,7 +38,10 @@ namespace CompanyEmployees
             services.AddScoped<ValidationFilterAttribute>();
             services.AddScoped<ValidateCompanyExistsAttribute>();
             services.AddScoped<ValidateEmployeeForCompanyExistsAttribute>();
+
             services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
+            services.AddScoped<ValidateMediaTypeAttribute>();
+            services.AddScoped<EmployeeLinks>();
 
 
             //in .NET 2.2 was AddMvc but this registered views & pages with are not needed in API
@@ -55,6 +59,8 @@ namespace CompanyEmployees
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+
+            services.AddCustomMediaTypes();
 
         }
 
