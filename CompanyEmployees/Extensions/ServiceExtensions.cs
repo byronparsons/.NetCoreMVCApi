@@ -1,7 +1,9 @@
-﻿using CompanyEmployees.Controllers;
+﻿using AspNetCoreRateLimit;
+using CompanyEmployees.Controllers;
 using Contracts;
 using Entities;
 using LoggerService;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -11,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 //using NLog;
 using Repository;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CompanyEmployees
@@ -36,21 +39,16 @@ namespace CompanyEmployees
                     //options.ForwardClientCertificate = true;
                 });
 
-        public static void ConfigureLoggerService(this IServiceCollection services) =>
-            services.AddScoped<ILoggerManager, LoggerManager>();
+        public static void ConfigureLoggerService(this IServiceCollection services) => services.AddScoped<ILoggerManager, LoggerManager>();
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
-            services.AddDbContext<RepositoryContext>(options => 
-                    options.UseSqlServer(configuration.GetConnectionString("sqlConnection"), 
+            services.AddDbContext<RepositoryContext>(options =>
+                    options.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
                                             b => b.MigrationsAssembly("CompanyEmployees"))
             );
 
         public static void ConfigureRepositoryManager(this IServiceCollection services) =>
             services.AddScoped<IRepositoryManager, RepositoryManager>();
-
-        public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder) =>
-            builder.AddMvcOptions(config => config.OutputFormatters.Add(new CsvOutputFormatter()));
-
 
         public static void AddCustomMediaTypes(this IServiceCollection services)
         {
@@ -92,5 +90,53 @@ namespace CompanyEmployees
                                             );
             });
         }
+
+        //public static void ConfigureResponseCaching(this IServiceCollection services) => services.AddResponseCaching();
+
+        public static void ConfigureHttpCachedHeaders(this IServiceCollection service)
+        {
+            service.AddHttpCacheHeaders(
+                (expOpt) =>
+                {
+                    expOpt.MaxAge = 65;
+                    expOpt.CacheLocation = CacheLocation.Private;
+                },
+                (validation) =>
+                {
+                    validation.MustRevalidate = true;
+                });
+        }
+
+        public static void ConfigureMemoryCache(this IServiceCollection services) => services.AddMemoryCache();
+
+        public static void ConfigureRateLimitingOptions(this IServiceCollection services)
+        {
+            var rateLimitRules = new List<RateLimitRule>
+            {
+                new RateLimitRule
+                {
+                    Endpoint="*",
+                    Limit = 3,
+                    Period = "1m"
+                }
+            };
+
+            //AspNetCoreRateLimit GitHub page.
+
+            services.Configure<IpRateLimitOptions>(opt =>
+            {
+                opt.GeneralRules = rateLimitRules;
+            });
+            services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>(); 
+            services.AddSingleton<IIpPolicyStore, MemoryCacheIpPolicyStore>(); 
+            services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+        }
+
+        public static void ConfigureHttpContextAccessor(this IServiceCollection services) => services.AddHttpContextAccessor();
+
+        public static IMvcBuilder AddCustomCSVFormatter(this IMvcBuilder builder) =>
+            builder.AddMvcOptions(config => config.OutputFormatters.Add(new CsvOutputFormatter()));
+
+
     }
 }

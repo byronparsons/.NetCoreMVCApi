@@ -8,6 +8,7 @@ using CompanyEmployees.ModelBinders;
 using Contracts;
 using Entities.Dto;
 using Entities.Models;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyEmployees.Controllers
@@ -15,6 +16,7 @@ namespace CompanyEmployees.Controllers
     //[ApiVersion("1.0")]
     [Route("api/companies")]
     [ApiController]
+    //[ResponseCache(CacheProfileName = "120SecondsDuration")]
     public class CompaniesController : ControllerBase
     {
         private readonly ILoggerManager _logger;
@@ -49,6 +51,9 @@ namespace CompanyEmployees.Controllers
 
         [HttpGet("{id}", Name = "GetCompanyById")]
         [ServiceFilter(typeof(ValidateCompanyExistsAttribute))]
+        //[ResponseCache(Duration = 60)]
+        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 60)]
+        [HttpCacheValidation(MustRevalidate = false)]
         public IActionResult GetCompany(Guid id)
         {
             var company = HttpContext.Items["company"];

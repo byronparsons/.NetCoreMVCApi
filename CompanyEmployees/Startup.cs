@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using AutoMapper;
 using CompanyEmployees.ActionFilters;
 using CompanyEmployees.Extensions;
@@ -44,12 +45,19 @@ namespace CompanyEmployees
             services.AddScoped<EmployeeLinks>();
 
             services.ConfigureVersioning();
+            //services.ConfigureResponseCaching();
+            services.ConfigureHttpCachedHeaders();
+
+            services.ConfigureMemoryCache(); 
+            services.ConfigureRateLimitingOptions(); 
+            services.ConfigureHttpContextAccessor();
 
             //in .NET 2.2 was AddMvc but this registered views & pages with are not needed in API
             services.AddControllers(config =>
             {
                 config.RespectBrowserAcceptHeader = true;
                 config.ReturnHttpNotAcceptable = true;
+                config.CacheProfiles.Add("120SecondsDuration", new CacheProfile { Duration = 120 });
 
             }).AddNewtonsoftJson()
               .AddXmlDataContractSerializerFormatters()
@@ -88,6 +96,9 @@ namespace CompanyEmployees
                 ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.All  
             });
 
+            //app.UseResponseCaching();
+            app.UseHttpCacheHeaders();
+            app.UseIpRateLimiting();
             app.UseRouting();
 
             app.UseAuthorization();
