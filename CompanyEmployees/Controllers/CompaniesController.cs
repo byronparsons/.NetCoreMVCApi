@@ -9,6 +9,7 @@ using Contracts;
 using Entities.Dto;
 using Entities.Models;
 using Marvin.Cache.Headers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CompanyEmployees.Controllers
@@ -38,7 +39,7 @@ namespace CompanyEmployees.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet(Name = "GetCompanies")]
+        [HttpGet(Name = "GetCompanies"), Authorize] //Authorize(Roles = "Manager")]
         public async Task<IActionResult> GetCompanies()
         {
             //throw new Exception("Exception: this is a test of failure");

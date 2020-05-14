@@ -1,9 +1,7 @@
 ﻿using Contracts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CompanyEmployees.ActionFilters
 {
@@ -23,6 +21,7 @@ namespace CompanyEmployees.ActionFilters
 
             var param = context.ActionArguments
                             .SingleOrDefault(x => x.Value.ToString().Contains("Dto")).Value;
+
             if (param == null)
             {
                 _logger.LogError($"Object sent from client is null. Controller:{controller} Action:{action}");

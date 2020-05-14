@@ -51,6 +51,11 @@ namespace CompanyEmployees
             services.ConfigureMemoryCache(); 
             services.ConfigureRateLimitingOptions(); 
             services.ConfigureHttpContextAccessor();
+            
+            services.AddAuthentication(); 
+            services.ConfigureIdentity();
+            services.ConfigureJWT(Configuration);
+            services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 
             //in .NET 2.2 was AddMvc but this registered views & pages with are not needed in API
             services.AddControllers(config =>
@@ -99,6 +104,8 @@ namespace CompanyEmployees
             //app.UseResponseCaching();
             app.UseHttpCacheHeaders();
             app.UseIpRateLimiting();
+            app.UseAuthentication(); 
+            app.UseAuthorization();
             app.UseRouting();
 
             app.UseAuthorization();
